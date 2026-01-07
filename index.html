@@ -219,10 +219,145 @@
       }
       .scoreboard-item .team-score { font-weight: 700; color: var(--yellow-400); }
       
+      /* Winner Display */
+      .winner-display {
+        background: linear-gradient(135deg, var(--yellow-400), var(--yellow-300));
+        padding: 2rem 1.5rem;
+        border-radius: 1rem;
+        margin-bottom: 1.5rem;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 20px 25px -5px rgba(0,0,0,.3), 0 10px 10px -5px rgba(0,0,0,.2);
+      }
+      .winner-banner {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: var(--green-900);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-bottom: 0.5rem;
+      }
+      .winner-team {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: var(--green-900);
+        margin: 0.5rem 0;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+      }
+      .trophy {
+        font-size: 4rem;
+        margin-bottom: 0.5rem;
+        display: inline-block;
+        animation: bounce 2s infinite;
+      }
+      .confetti {
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        background-color: var(--red-500);
+        animation: confetti-fall 3s linear infinite;
+      }
+      @keyframes confetti-fall {
+        0% { transform: translateY(-100%) rotate(0deg); opacity: 1; }
+        100% { transform: translateY(400%) rotate(720deg); opacity: 0; }
+      }
+      .confetti:nth-child(1) { left: 10%; animation-delay: 0s; background-color: var(--red-500); }
+      .confetti:nth-child(2) { left: 20%; animation-delay: 0.2s; background-color: var(--yellow-400); }
+      .confetti:nth-child(3) { left: 30%; animation-delay: 0.4s; background-color: var(--green-800); }
+      .confetti:nth-child(4) { left: 40%; animation-delay: 0.6s; background-color: var(--team1-color); }
+      .confetti:nth-child(5) { left: 50%; animation-delay: 0.8s; background-color: var(--team2-color); }
+      .confetti:nth-child(6) { left: 60%; animation-delay: 1s; background-color: var(--team3-color); }
+      .confetti:nth-child(7) { left: 70%; animation-delay: 1.2s; background-color: var(--team4-color); }
+      .confetti:nth-child(8) { left: 80%; animation-delay: 1.4s; background-color: var(--red-500); }
+      .confetti:nth-child(9) { left: 90%; animation-delay: 1.6s; background-color: var(--yellow-400); }
+      
+      /* Final Winner Display */
+      .final-winner-display {
+        background: linear-gradient(135deg, var(--yellow-400), var(--yellow-300));
+        padding: 3rem 2rem;
+        border-radius: 1rem;
+        margin-bottom: 1.5rem;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 25px 50px -12px rgba(0,0,0,.4);
+        text-align: center;
+      }
+      .final-trophy {
+        font-size: 6rem;
+        margin-bottom: 1rem;
+        display: inline-block;
+        animation: bounce 1.5s infinite;
+        filter: drop-shadow(0 10px 20px rgba(0,0,0,0.3));
+      }
+      .victory-message {
+        font-size: 2rem;
+        font-weight: 700;
+        color: var(--green-900);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin-bottom: 1rem;
+      }
+      .final-winner-team {
+        font-size: 3rem;
+        font-weight: 700;
+        color: var(--green-900);
+        margin: 1rem 0;
+        text-shadow: 3px 3px 6px rgba(0,0,0,0.2);
+      }
+      .final-score {
+        font-size: 2rem;
+        font-weight: 600;
+        color: var(--green-800);
+        margin-top: 0.5rem;
+      }
+      
+      /* Get Ready Countdown */
+      .countdown-screen {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 2rem;
+      }
+      .countdown-number {
+        font-size: 8rem;
+        font-weight: 700;
+        color: var(--yellow-400);
+        text-shadow: 4px 4px 8px rgba(0,0,0,0.3);
+        animation: pulse 1s infinite;
+      }
+      .countdown-message {
+        font-size: 2rem;
+        font-weight: 600;
+        color: var(--white);
+        text-align: center;
+      }
+      .btn-skip {
+        background-color: var(--gray-300);
+        color: var(--green-900);
+        font-size: 1.125rem;
+        padding: 0.75rem 1.5rem;
+        border-radius: 0.5rem;
+        border: none;
+        cursor: pointer;
+        transition: all 0.15s ease-in-out;
+      }
+      .btn-skip:hover {
+        background-color: var(--white);
+        transform: scale(1.05);
+      }
+      .btn-skip:active {
+        transform: scale(0.95);
+      }
+      
       @media (min-width: 768px) {
         .title-screen h1 { font-size: 4.5rem; }
         .target-word { font-size: 3rem; }
         .forbidden-word { font-size: 1.875rem; }
+        .winner-team { font-size: 3rem; }
+        .trophy { font-size: 5rem; }
+        .final-trophy { font-size: 8rem; }
+        .final-winner-team { font-size: 4rem; }
       }
 
       /** Splitting.js **/
@@ -327,9 +462,57 @@
       <div id="round-over-screen" class="screen">
         <div class="title-screen">
           <h1>Round Over!</h1>
+          <div id="winner-display" class="winner-display">
+            <div class="confetti"></div>
+            <div class="confetti"></div>
+            <div class="confetti"></div>
+            <div class="confetti"></div>
+            <div class="confetti"></div>
+            <div class="confetti"></div>
+            <div class="confetti"></div>
+            <div class="confetti"></div>
+            <div class="confetti"></div>
+            <div class="trophy">🏆</div>
+            <div class="winner-banner">Current Leader</div>
+            <div id="winner-team-name" class="winner-team"></div>
+            <div id="winner-team-score" style="font-size: 1.5rem; font-weight: 600; color: var(--green-800); margin-top: 0.5rem;"></div>
+          </div>
           <div id="scoreboard" class="scoreboard"></div>
           <button id="next-round-btn" class="btn btn-primary" style="max-width: 20rem;"></button>
           <button id="new-game-btn" class="btn btn-secondary" style="max-width: 20rem; margin-top: 1rem;">New Game</button>
+        </div>
+      </div>
+
+      <!-- Get Ready Countdown Screen -->
+      <div id="get-ready-screen" class="screen">
+        <div class="countdown-screen">
+          <div id="countdown-number" class="countdown-number">10</div>
+          <div id="countdown-message" class="countdown-message">Get Ready!</div>
+          <button id="skip-countdown-btn" class="btn-skip">Skip Countdown</button>
+        </div>
+      </div>
+
+      <!-- Game Over Screen -->
+      <div id="game-over-screen" class="screen">
+        <div class="title-screen">
+          <h1>Game Over!</h1>
+          <div id="final-winner-display" class="final-winner-display">
+            <div class="confetti"></div>
+            <div class="confetti"></div>
+            <div class="confetti"></div>
+            <div class="confetti"></div>
+            <div class="confetti"></div>
+            <div class="confetti"></div>
+            <div class="confetti"></div>
+            <div class="confetti"></div>
+            <div class="confetti"></div>
+            <div class="final-trophy">🏆</div>
+            <div class="victory-message">Champion!</div>
+            <div id="final-winner-team-name" class="final-winner-team"></div>
+            <div id="final-winner-team-score" class="final-score"></div>
+          </div>
+          <div id="final-scoreboard" class="scoreboard"></div>
+          <button id="play-again-btn" class="btn btn-primary" style="max-width: 20rem; margin-top: 1rem;">Play Again</button>
         </div>
       </div>
     </main>
@@ -357,11 +540,13 @@
         let teams = [];
         const teamColors = ['var(--team1-color)', 'var(--team2-color)', 'var(--team3-color)', 'var(--team4-color)'];
         let currentTeamIndex = 0;
+        let totalRoundsCompleted = 0;
+        const MAX_ROUNDS_PER_TEAM = 3;
 
         // --- DOM ELEMENTS ---
-        const screens = { teamSelection: document.getElementById('team-selection-screen'), game: document.getElementById('game-screen'), roundOver: document.getElementById('round-over-screen'), };
-        const buttons = { pass: document.getElementById('pass-btn'), correct: document.getElementById('correct-btn'), nextRound: document.getElementById('next-round-btn'), newGame: document.getElementById('new-game-btn'), teamCount: document.querySelectorAll('.team-count-btn'), };
-        const displays = { score: document.getElementById('score'), timer: document.getElementById('timer'), targetWord: document.getElementById('target-word'), forbiddenWordsList: document.getElementById('forbidden-words-list'), gameCard: document.getElementById('game-card'), currentTeamIndicator: document.getElementById('current-team-indicator'), scoreboard: document.getElementById('scoreboard'), };
+        const screens = { teamSelection: document.getElementById('team-selection-screen'), game: document.getElementById('game-screen'), roundOver: document.getElementById('round-over-screen'), gameOver: document.getElementById('game-over-screen'), };
+        const buttons = { pass: document.getElementById('pass-btn'), correct: document.getElementById('correct-btn'), nextRound: document.getElementById('next-round-btn'), newGame: document.getElementById('new-game-btn'), teamCount: document.querySelectorAll('.team-count-btn'), playAgain: document.getElementById('play-again-btn'), };
+        const displays = { score: document.getElementById('score'), timer: document.getElementById('timer'), targetWord: document.getElementById('target-word'), forbiddenWordsList: document.getElementById('forbidden-words-list'), gameCard: document.getElementById('game-card'), currentTeamIndicator: document.getElementById('current-team-indicator'), scoreboard: document.getElementById('scoreboard'), winnerTeamName: document.getElementById('winner-team-name'), winnerTeamScore: document.getElementById('winner-team-score'), winnerDisplay: document.getElementById('winner-display'), finalWinnerTeamName: document.getElementById('final-winner-team-name'), finalWinnerTeamScore: document.getElementById('final-winner-team-score'), finalScoreboard: document.getElementById('final-scoreboard'), };
 
         // --- ANIMATION HELPER ---
         const animateElement = (element, animation, duration) => {
@@ -383,7 +568,7 @@
         // --- GAME LOGIC ---
         const shuffleArray = (array) => { for (let i = array.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [array[i], array[j]] = [array[j], array[i]]; } return array; };
         
-        const renderScreen = () => { Object.values(screens).forEach(screen => screen.classList.remove('active')); if (gameState === 'TEAM_SELECTION') screens.teamSelection.classList.add('active'); if (gameState === 'PLAYING') screens.game.classList.add('active'); if (gameState === 'ROUND_OVER') screens.roundOver.classList.add('active'); };
+        const renderScreen = () => { Object.values(screens).forEach(screen => screen.classList.remove('active')); if (gameState === 'TEAM_SELECTION') screens.teamSelection.classList.add('active'); if (gameState === 'PLAYING') screens.game.classList.add('active'); if (gameState === 'ROUND_OVER') screens.roundOver.classList.add('active'); if (gameState === 'GAME_OVER') screens.gameOver.classList.add('active'); };
 
         const updateCard = () => {
           const card = shuffledCards[currentCardIndex];
@@ -406,6 +591,13 @@
         const updateScoreboard = () => {
           displays.scoreboard.innerHTML = '';
           teams.sort((a, b) => b.score - a.score); 
+          
+          // Update winner display with leading team
+          const leadingTeam = teams[0];
+          displays.winnerTeamName.textContent = leadingTeam.name;
+          displays.winnerTeamScore.textContent = `${leadingTeam.score} points`;
+          displays.winnerDisplay.style.background = `linear-gradient(135deg, ${leadingTeam.color}, var(--yellow-300))`;
+          
           teams.forEach(team => {
             const item = document.createElement('div');
             item.className = 'scoreboard-item';
@@ -438,6 +630,7 @@
             teams.push({ name: `Team ${i + 1}`, score: 0, color: teamColors[i] });
           }
           currentTeamIndex = 0;
+          totalRoundsCompleted = 0;
           shuffledCards = shuffleArray([...gameCards]);
           currentCardIndex = 0;
           startRound();
@@ -447,17 +640,51 @@
           clearInterval(timerInterval);
           teams[currentTeamIndex].score += roundScore;
           currentTeamIndex = (currentTeamIndex + 1) % numberOfTeams;
+          totalRoundsCompleted++;
+          
+          // Check if all teams have completed 3 rounds
+          if (totalRoundsCompleted >= numberOfTeams * MAX_ROUNDS_PER_TEAM) {
+            showFinalWinner();
+            return;
+          }
+          
           gameState = 'ROUND_OVER';
           updateScoreboard();
           const nextTeamName = teams[currentTeamIndex].name;
-          buttons.nextRound.textContent = `Start ${nextTeamName}'s Turn`;
+          const roundsLeft = MAX_ROUNDS_PER_TEAM - Math.floor(totalRoundsCompleted / numberOfTeams);
+          buttons.nextRound.textContent = `Start ${nextTeamName}'s Turn (Round ${Math.floor(totalRoundsCompleted / numberOfTeams) + 1}/${MAX_ROUNDS_PER_TEAM})`;
           renderScreen();
           animateElement(document.querySelector('#round-over-screen > .title-screen'), 'fadeIn', 800);
+        };
+
+        const showFinalWinner = () => {
+          gameState = 'GAME_OVER';
+          teams.sort((a, b) => b.score - a.score);
+          const champion = teams[0];
+          
+          // Update final winner display
+          displays.finalWinnerTeamName.textContent = champion.name;
+          displays.finalWinnerTeamScore.textContent = `${champion.score} Total Points`;
+          
+          // Update final scoreboard
+          displays.finalScoreboard.innerHTML = '';
+          teams.forEach((team, index) => {
+            const item = document.createElement('div');
+            item.className = 'scoreboard-item';
+            item.style.backgroundColor = team.color;
+            const position = index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : `${index + 1}.`;
+            item.innerHTML = `<span class="team-name">${position} ${team.name}</span><span class="team-score">${team.score}</span>`;
+            displays.finalScoreboard.appendChild(item);
+          });
+          
+          renderScreen();
+          animateElement(document.querySelector('#game-over-screen > .title-screen'), 'fadeIn', 800);
         };
 
         const resetGame = () => {
           clearInterval(timerInterval);
           gameState = 'TEAM_SELECTION';
+          totalRoundsCompleted = 0;
           renderScreen();
         };
 
@@ -468,6 +695,7 @@
         buttons.teamCount.forEach(button => { button.addEventListener('click', (e) => setupAndStartGame(parseInt(e.target.dataset.teams))); });
         buttons.nextRound.addEventListener('click', startRound);
         buttons.newGame.addEventListener('click', resetGame);
+        buttons.playAgain.addEventListener('click', resetGame);
         buttons.correct.addEventListener('click', handleCorrect);
         buttons.pass.addEventListener('click', handlePass);
         
