@@ -1141,17 +1141,16 @@
         const handlePass = () => { nextCard(); };
 
         // --- EVENT LISTENERS ---
-        buttons.playNow.addEventListener('click', showTeamSelection);
-        buttons.teamCount.forEach(button => { button.addEventListener('click', (e) => setupAndStartGame(parseInt(e.target.dataset.teams))); });
-        buttons.deckOptions.forEach(option => { option.addEventListener('click', (e) => toggleDeck(e.currentTarget)); });
-        buttons.nextRound.addEventListener('click', startCountdown);
-        buttons.newGame.addEventListener('click', resetGame);
-        buttons.playAgain.addEventListener('click', resetGame);
-        buttons.skipCountdown.addEventListener('click', skipCountdown);
-        buttons.correct.addEventListener('click', handleCorrect);
-        buttons.pass.addEventListener('click', handlePass);
-        
-        buttons.sound.addEventListener('click', () => SoundManager.toggle());
+        const actions = {
+          'play-now-btn': showTeamSelection, 'next-round-btn': startCountdown,
+          'new-game-btn': resetGame, 'play-again-btn': resetGame,
+          'skip-countdown-btn': skipCountdown, 'correct-btn': handleCorrect,
+          'pass-btn': handlePass, 'sound-btn': () => SoundManager.toggle()
+        };
+        Object.entries(actions).forEach(([id, fn]) => document.getElementById(id)?.addEventListener('click', fn));
+
+        buttons.teamCount.forEach(b => b.addEventListener('click', (e) => setupAndStartGame(parseInt(e.target.dataset.teams))));
+        buttons.deckOptions.forEach(o => o.addEventListener('click', (e) => toggleDeck(e.currentTarget)));
         
         // --- INITIAL RENDER ---
         renderScreen();
@@ -1160,46 +1159,21 @@
     </script>
     <script>
       // PWA & Service Worker
-      if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-          navigator.serviceWorker.register('./sw.js')
-            .then(reg => console.log('Service Worker registered!', reg))
-            .catch(err => console.log('Service Worker registration failed:', err));
-        });
-      }
+      if ('serviceWorker' in navigator) navigator.serviceWorker.register('./sw.js').catch(console.log);
 
       // Install Prompt Logic
       let deferredPrompt;
-      const installPrompt = document.getElementById('install-prompt');
-      const installBtn = document.getElementById('install-btn');
-      const closeInstallBtn = document.getElementById('close-install-btn');
+      const [prompt, installBtn, closeBtn] = ['install-prompt', 'install-btn', 'close-install-btn'].map(id => document.getElementById(id));
 
-      window.addEventListener('beforeinstallprompt', (e) => {
-        // Prevent default install prompt
-        e.preventDefault();
-        // Store event for later
-        deferredPrompt = e;
-        // Show custom UI
-        installPrompt.classList.add('visible');
-      });
-
+      window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); deferredPrompt = e; prompt.classList.add('visible'); });
+      
       installBtn.addEventListener('click', async () => {
-        if (deferredPrompt) {
-          deferredPrompt.prompt();
-          const choiceResult = await deferredPrompt.userChoice;
-          if (choiceResult.outcome === 'accepted') {
-            console.log('User accepted the install prompt');
-          } else {
-            console.log('User dismissed the install prompt');
-          }
-          deferredPrompt = null;
-        }
-        installPrompt.classList.remove('visible');
+        if (!deferredPrompt) return;
+        deferredPrompt.prompt();
+        if ((await deferredPrompt.userChoice).outcome === 'accepted') deferredPrompt = null;
+        prompt.classList.remove('visible');
       });
-
-      closeInstallBtn.addEventListener('click', () => {
-        installPrompt.classList.remove('visible');
-      });
+      closeBtn.addEventListener('click', () => prompt.classList.remove('visible'));
     </script>
   </body>
 </html>
