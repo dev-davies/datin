@@ -648,6 +648,7 @@
       <div id="game-screen" class="screen">
         <div id="current-team-indicator"></div>
         <header class="game-header">
+          <button id="pause-btn" class="btn-icon" style="background: none; border: none; font-size: 2rem; cursor: pointer;">⏸️</button>
           <div class="score-display">
             <span class="label">Round Score:</span>
             <span id="score" class="value">0</span>
@@ -656,6 +657,13 @@
             <span id="timer" class="timer">90</span>
           </div>
         </header>
+
+      <!-- Pause Overlay -->
+      <div id="pause-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 3000; flex-direction: column; align-items: center; justify-content: center; text-align: center;">
+        <h1 style="color: var(--yellow-400); font-size: 3rem; margin-bottom: 2rem;">Oya Wait! ✋</h1>
+        <p style="color: var(--white); font-size: 1.5rem; margin-bottom: 2rem;">Game Paused</p>
+        <button id="resume-btn" class="btn btn-primary" style="font-size: 1.5rem; padding: 1rem 3rem;">Oya Continue ▶️</button>
+      </div>
         <div class="card-container">
           <div id="game-card" class="game-card">
             <div class="card-section target">
@@ -1069,17 +1077,37 @@
 
         const nextCard = () => { currentCardIndex++; if (currentCardIndex >= shuffledCards.length) { shuffledCards = shuffleArray([...gameCards]); currentCardIndex = 0; } updateCard(); };
 
+
+
         const updateTimer = () => { 
-          timeLeft--; 
-          displays.timer.textContent = timeLeft; 
-          displays.timer.classList.toggle('low-time', timeLeft <= 10); 
-          if (timeLeft <= 0) { 
-             SoundManager.playTimeUp();
-             showReviewScreen(); 
-          } else if (timeLeft <= 5) {
-             // Optional critical ticking sound for last 5 seconds?
-             // SoundManager.countdownBeep(); 
-          }
+           if (isPaused) return; // double check
+           timeLeft--; 
+           displays.timer.textContent = timeLeft; 
+           displays.timer.classList.toggle('low-time', timeLeft <= 10); 
+           if (timeLeft <= 0) { 
+              SoundManager.playTimeUp();
+              showReviewScreen(); 
+           } else if (timeLeft <= 5) {
+              // Optional critical ticking sound for last 5 seconds?
+              // SoundManager.countdownBeep(); 
+           }
+         };
+
+        // --- PAUSE LOGIC ---
+        let isPaused = false;
+        const pauseOverlay = document.getElementById('pause-overlay');
+        
+        const togglePause = () => {
+            if (gameState !== 'PLAYING') return;
+            
+            isPaused = !isPaused;
+            if (isPaused) {
+                clearInterval(timerInterval);
+                pauseOverlay.style.display = 'flex';
+            } else {
+                pauseOverlay.style.display = 'none';
+                timerInterval = setInterval(updateTimer, 1000);
+            }
         };
 
         const updateScoreboard = () => {
@@ -1132,6 +1160,8 @@
 
         const startRound = () => {
           gameState = 'PLAYING';
+          isPaused = false; 
+          pauseOverlay.style.display = 'none';
           roundCards = [];
           roundScore = 0;
           timeLeft = ROUND_DURATION;
@@ -1264,7 +1294,8 @@
           'new-game-btn': resetGame, 'play-again-btn': resetGame,
           'skip-countdown-btn': skipCountdown, 'correct-btn': handleCorrect,
           'pass-btn': handlePass, 'sound-btn': () => SoundManager.toggle(),
-          'confirm-score-btn': endRound
+          'confirm-score-btn': endRound,
+          'pause-btn': togglePause, 'resume-btn': togglePause
         };
         Object.entries(actions).forEach(([id, fn]) => document.getElementById(id)?.addEventListener('click', fn));
 
