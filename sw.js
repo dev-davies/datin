@@ -1,4 +1,4 @@
-const CACHE_NAME = 'dat-tin-v4';
+const CACHE_NAME = 'dat-tin-v5';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
@@ -8,7 +8,8 @@ const ASSETS_TO_CACHE = [
   './timeup.mp3',
   './js/cards.js',
   './js/game.js',
-  './js/splitting.js'
+  './js/splitting.js',
+  './css/style.css'
 ];
 
 self.addEventListener('install', (event) => {
