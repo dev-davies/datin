@@ -1,9 +1,11 @@
-const CACHE_NAME = 'dat-tin-v2';
+const CACHE_NAME = 'dat-tin-v3';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
   './manifest.json',
-  './icon.png'
+  './icon.png',
+  './correct.mp3',
+  './timeup.mp3'
 ];
 
 self.addEventListener('install', (event) => {

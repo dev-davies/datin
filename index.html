@@ -626,11 +626,19 @@
             </div>
 
             <h2>Round Duration</h2>
-            <div class="timer-selector" style="display: flex; gap: 0.5rem; justify-content: center;">
-                <button class="timer-btn selected" data-time="30" style="flex:1; padding:0.75rem; border-radius:0.5rem; border:none; background:var(--green-900); color:var(--gray-300); border:2px solid var(--gray-300); font-weight:700; cursor:pointer;">30s</button>
-                <button class="timer-btn" data-time="60" style="flex:1; padding:0.75rem; border-radius:0.5rem; border:none; background:var(--green-900); color:var(--gray-300); border:2px solid var(--gray-300); font-weight:700; cursor:pointer;">60s</button>
-                <button class="timer-btn" data-time="90" style="flex:1; padding:0.75rem; border-radius:0.5rem; border:none; background:var(--green-900); color:var(--gray-300); border:2px solid var(--gray-300); font-weight:700; cursor:pointer;">90s</button>
-                <button class="timer-btn" data-time="120" style="flex:1; padding:0.75rem; border-radius:0.5rem; border:none; background:var(--green-900); color:var(--gray-300); border:2px solid var(--gray-300); font-weight:700; cursor:pointer;">120s</button>
+            <div class="timer-selector" style="display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap;">
+                <button class="timer-btn selected" data-time="30" style="flex:1; min-width: 45%; padding:0.75rem; border-radius:0.5rem; border:none; background:var(--green-900); color:var(--gray-300); border:2px solid var(--gray-300); font-weight:700; cursor:pointer;">
+                    Sharp Sharp ⚡<br><span style="font-size: 0.8em; font-weight: 400">30s</span>
+                </button>
+                <button class="timer-btn" data-time="60" style="flex:1; min-width: 45%; padding:0.75rem; border-radius:0.5rem; border:none; background:var(--green-900); color:var(--gray-300); border:2px solid var(--gray-300); font-weight:700; cursor:pointer;">
+                    Normal Level 🇳🇬<br><span style="font-size: 0.8em; font-weight: 400">60s</span>
+                </button>
+                <button class="timer-btn" data-time="90" style="flex:1; min-width: 45%; padding:0.75rem; border-radius:0.5rem; border:none; background:var(--green-900); color:var(--gray-300); border:2px solid var(--gray-300); font-weight:700; cursor:pointer;">
+                    Soft Work 🛋️<br><span style="font-size: 0.8em; font-weight: 400">90s</span>
+                </button>
+                <button class="timer-btn" data-time="120" style="flex:1; min-width: 45%; padding:0.75rem; border-radius:0.5rem; border:none; background:var(--green-900); color:var(--gray-300); border:2px solid var(--gray-300); font-weight:700; cursor:pointer;">
+                    African Time 🐌<br><span style="font-size: 0.8em; font-weight: 400">120s</span>
+                </button>
             </div>
           </div>
         </div>
@@ -937,6 +945,10 @@
         const SoundManager = {
           ctx: null,
           enabled: true,
+          sounds: {
+              correct: new Audio('correct.mp3'),
+              timeup: new Audio('timeup.mp3')
+          },
           init() {
             if (!this.ctx) {
               const AudioContext = window.AudioContext || window.webkitAudioContext;
@@ -945,6 +957,9 @@
             if (this.ctx.state === 'suspended') {
               this.ctx.resume();
             }
+            // Preload sounds
+            this.sounds.correct.load();
+            this.sounds.timeup.load();
           },
           toggle() {
             this.enabled = !this.enabled;
@@ -966,11 +981,23 @@
                 osc.stop(this.ctx.currentTime + duration);
             } catch(e) { console.error("Audio Error:", e); }
           },
+          playSound(name) {
+              if (!this.enabled) return;
+              const sound = this.sounds[name];
+              if (sound) {
+                  sound.currentTime = 0;
+                  sound.play().catch(e => {
+                      console.log("Audio play failed, falling back to beep:", e);
+                      // Fallback logic
+                      if (name === 'correct') this.playTone(600, 0.1, 'sine');
+                      if (name === 'timeup') this.playTone(80, 1.0, 'sawtooth');
+                  });
+              }
+          },
           countdownBeep() { this.playTone(600, 0.1, 'sine'); },
           goBeep() { this.playTone(800, 0.3, 'square'); },
-          timeUpBuzz() { 
-              this.playTone(80, 1.0, 'sawtooth'); 
-          }
+          playCorrect() { this.playSound('correct'); },
+          playTimeUp() { this.playSound('timeup'); }
         };
 
         // --- ANIMATION HELPER ---
@@ -1047,7 +1074,7 @@
           displays.timer.textContent = timeLeft; 
           displays.timer.classList.toggle('low-time', timeLeft <= 10); 
           if (timeLeft <= 0) { 
-             SoundManager.timeUpBuzz();
+             SoundManager.playTimeUp();
              showReviewScreen(); 
           } else if (timeLeft <= 5) {
              // Optional critical ticking sound for last 5 seconds?
@@ -1222,7 +1249,9 @@
 
         const handleCorrect = () => { 
             roundCards.push({ word: displays.targetWord.textContent, status: 'correct' });
-            roundScore++; displays.score.textContent = roundScore; animateElement(displays.score, 'tada', 800); nextCard(); 
+            roundScore++; displays.score.textContent = roundScore; animateElement(displays.score, 'tada', 800); 
+            SoundManager.playCorrect();
+            nextCard(); 
         };
         const handlePass = () => { 
             roundCards.push({ word: displays.targetWord.textContent, status: 'skipped' });
