@@ -207,6 +207,11 @@
       .deck-option:hover {
         transform: translateY(-2px);
       }
+      .timer-btn.selected {
+        background-color: var(--yellow-400) !important;
+        border-color: var(--yellow-400) !important;
+        color: var(--green-900) !important;
+      }
       #current-team-indicator {
         font-size: 1.5rem;
         font-weight: 700;
@@ -541,6 +546,26 @@
         flex: 1;
         max-width: 10rem;
       }
+      .review-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: rgba(0,0,0,0.2);
+        margin-bottom: 0.5rem;
+        padding: 0.75rem;
+        border-radius: 0.25rem;
+      }
+      .review-word { font-weight: 600; color: var(--white); }
+      .status-btn {
+        padding: 0.25rem 0.75rem;
+        border: none;
+        border-radius: 0.25rem;
+        font-weight: 700;
+        cursor: pointer;
+        min-width: 5rem;
+      }
+      .status-btn.correct { background-color: var(--yellow-400); color: var(--green-900); }
+      .status-btn.pass { background-color: var(--red-600); color: var(--white); }
     </style>
   </head>
   <body>
@@ -598,6 +623,14 @@
                 <button class="team-count-btn" data-teams="2">2</button>
                 <button class="team-count-btn" data-teams="3">3</button>
                 <button class="team-count-btn" data-teams="4">4</button>
+            </div>
+
+            <h2>Round Duration</h2>
+            <div class="timer-selector" style="display: flex; gap: 0.5rem; justify-content: center;">
+                <button class="timer-btn selected" data-time="30" style="flex:1; padding:0.75rem; border-radius:0.5rem; border:none; background:var(--green-900); color:var(--gray-300); border:2px solid var(--gray-300); font-weight:700; cursor:pointer;">30s</button>
+                <button class="timer-btn" data-time="60" style="flex:1; padding:0.75rem; border-radius:0.5rem; border:none; background:var(--green-900); color:var(--gray-300); border:2px solid var(--gray-300); font-weight:700; cursor:pointer;">60s</button>
+                <button class="timer-btn" data-time="90" style="flex:1; padding:0.75rem; border-radius:0.5rem; border:none; background:var(--green-900); color:var(--gray-300); border:2px solid var(--gray-300); font-weight:700; cursor:pointer;">90s</button>
+                <button class="timer-btn" data-time="120" style="flex:1; padding:0.75rem; border-radius:0.5rem; border:none; background:var(--green-900); color:var(--gray-300); border:2px solid var(--gray-300); font-weight:700; cursor:pointer;">120s</button>
             </div>
           </div>
         </div>
@@ -690,6 +723,23 @@
           <button id="play-again-btn" class="btn btn-primary" style="max-width: 20rem; margin-top: 1rem;">Play Again</button>
         </div>
       </div>
+      <!-- Review Screen -->
+      <div id="review-screen" class="screen">
+        <div class="title-screen">
+            <h1>Review Round</h1>
+            <div class="review-box" style="background: var(--green-800); padding: 1rem; border-radius: 0.5rem; width: 100%; max-width: 24rem; max-height: 60vh; overflow-y: auto;">
+                <h3 style="color: var(--yellow-400); text-align: center; margin-top: 0;">Check Scores</h3>
+                <ul id="review-list" style="list-style: none; padding: 0;">
+                    <!-- Items will be injected here -->
+                </ul>
+            </div>
+            <div style="font-size: 1.5rem; font-weight: 700; margin: 1rem 0;">
+                Score: <span id="review-score" style="color: var(--yellow-400)">0</span>
+            </div>
+            <button id="confirm-score-btn" class="btn btn-primary">Confirm Score</button>
+        </div>
+      </div>
+
       <!-- Install Prompt -->
       <div id="install-prompt" class="install-prompt">
         <div class="install-content">
@@ -708,7 +758,7 @@
     <script>
       document.addEventListener('DOMContentLoaded', () => {
         // --- DATA ---
-        const ROUND_DURATION = 60;
+        let ROUND_DURATION = 30; // Changed to let, default 30s
         const COUNTDOWN_DURATION = 10;
         const gameCards = [
           { targetWord: 'Jollof Rice', forbiddenWords: ['Party', 'Tomato', 'Orange'] }, { targetWord: 'Nollywood', forbiddenWords: ['Movie', 'Film', 'Actor'] }, { targetWord: 'Lagos', forbiddenWords: ['Traffic', 'City', 'Eko'] }, { targetWord: 'Fela Kuti', forbiddenWords: ['Music', 'Afrobeat', 'Saxophone'] }, { targetWord: 'Suya', forbiddenWords: ['Meat', 'Skewer', 'Spice'] }, { targetWord: 'Agbada', forbiddenWords: ['Buba', 'Sokoto', 'Grand'] }, { targetWord: 'Harmattan', forbiddenWords: ['Dry', 'Season', 'Dust'] }, { targetWord: 'Okada', forbiddenWords: ['Motorcycle', 'Bike', 'Transport'] }, { targetWord: 'Puff Puff', forbiddenWords: ['Dough', 'Snack', 'Fried'] }, { targetWord: 'Chin Chin', forbiddenWords: ['Snack', 'Hard', 'Flour'] }, { targetWord: 'Eba', forbiddenWords: ['Garri', 'Swallow', 'Soup'] }, { targetWord: 'Pounded Yam', forbiddenWords: ['Iyan', 'Mortar', 'Tuber'] }, { targetWord: 'Davido', forbiddenWords: ['OBO', 'Music', '30BG'] }, { targetWord: 'Wizkid', forbiddenWords: ['Starboy', 'Music', 'Ojuelegba'] }, { targetWord: 'Burna Boy', forbiddenWords: ['African Giant', 'Odogwu', 'Grammy'] }, { targetWord: 'Super Eagles', forbiddenWords: ['Football', 'Team', 'Green'] }, { targetWord: 'Wole Soyinka', forbiddenWords: ['Nobel', 'Author', 'Playwright'] }, { targetWord: 'Chimamanda Adichie', forbiddenWords: ['Author', 'Feminist', 'Writer'] }, { targetWord: 'Danfo', forbiddenWords: ['Bus', 'Yellow', 'Conductor'] }, { targetWord: 'Pidgin English', forbiddenWords: ['Language', 'Broken', 'Speak'] }, { targetWord: 'Aso Rock', forbiddenWords: ['President', 'Abuja', 'Villa'] }, { targetWord: 'Zuma Rock', forbiddenWords: ['Abuja', 'Face', 'Monolith'] }, { targetWord: 'Gele', forbiddenWords: ['Head-tie', 'Fabric', 'Women'] }, { targetWord: 'Owambe', forbiddenWords: ['Party', 'Celebration', 'Spray'] }, { targetWord: 'Boli', forbiddenWords: ['Plantain', 'Roasted', 'Fish'] }, { targetWord: 'Akara', forbiddenWords: ['Beans', 'Cake', 'Fried'] }, { targetWord: 'Moi Moi', forbiddenWords: ['Beans', 'Pudding', 'Steamed'] }, { targetWord: 'Egusi', forbiddenWords: ['Soup', 'Melon', 'Seed'] }, { targetWord: 'Keke Napep', forbiddenWords: ['Tricycle', 'Yellow', 'Transport'] }, { targetWord: 'Shea Butter', forbiddenWords: ['Ori', 'Cream', 'Skin'] }, { targetWord: 'Palm Wine', forbiddenWords: ['Drink', 'Tree', 'Tapper'] }, { targetWord: 'Ankara', forbiddenWords: ['Fabric', 'Wax', 'Print'] }, { targetWord: 'Talking Drum', forbiddenWords: ['Gangan', 'Instrument', 'Yoruba'] }, { targetWord: 'NEPA', forbiddenWords: ['Light', 'Power', 'Blackout'] }, { targetWord: 'Go-slow', forbiddenWords: ['Traffic', 'Jam', 'Hold-up'] }, { targetWord: 'Oga', forbiddenWords: ['Boss', 'Master', 'Chief'] }, { targetWord: 'Wahala', forbiddenWords: ['Trouble', 'Problem', 'Stress'] }, { targetWord: 'Sisi', forbiddenWords: ['Girl', 'Lady', 'Young'] }, { targetWord: 'Buka', forbiddenWords: ['Restaurant', 'Food', 'Local'] }, { targetWord: 'Garri', forbiddenWords: ['Cassava', 'Flakes', 'Drink'] }, { targetWord: 'Iro and Buba', forbiddenWords: ['Wrapper', 'Blouse', 'Yoruba'] }, { targetWord: 'Shaku Shaku', forbiddenWords: ['Dance', 'Legwork', 'Zanku'] }, { targetWord: 'Aliko Dangote', forbiddenWords: ['Richest', 'Man', 'Cement'] }, { targetWord: 'Nkwobi', forbiddenWords: ['Cowleg', 'Spicy', 'Igbo'] }, { targetWord: 'Abacha', forbiddenWords: ['African Salad', 'Cassava', 'Ugba'] }, { targetWord: 'Zobo', forbiddenWords: ['Drink', 'Red', 'Hibiscus'] }, { targetWord: 'Tiwa Savage', forbiddenWords: ['Queen', 'Afrobeats', 'Singer'] }, { targetWord: 'Yemi Alade', forbiddenWords: ['Mama Africa', 'Johnny', 'Female'] }, { targetWord: 'Olumo Rock', forbiddenWords: ['Abeokuta', 'Mountain', 'Egba'] }, { targetWord: 'Afrobeats', forbiddenWords: ['Music', 'Genre', 'Fela'] },
@@ -876,9 +926,10 @@
         let totalRoundsCompleted = 0;
         const MAX_ROUNDS_PER_TEAM = 3;
         let selectedDecks = new Set(['naija']);
+        let roundCards = [];
 
         // --- DOM ELEMENTS ---
-        const screens = { welcome: document.getElementById('welcome-screen'), teamSelection: document.getElementById('team-selection-screen'), game: document.getElementById('game-screen'), roundOver: document.getElementById('round-over-screen'), gameOver: document.getElementById('game-over-screen'), getReady: document.getElementById('get-ready-screen'), };
+        const screens = { welcome: document.getElementById('welcome-screen'), teamSelection: document.getElementById('team-selection-screen'), game: document.getElementById('game-screen'), roundOver: document.getElementById('round-over-screen'), gameOver: document.getElementById('game-over-screen'), getReady: document.getElementById('get-ready-screen'), review: document.getElementById('review-screen') };
         const buttons = { playNow: document.getElementById('play-now-btn'), pass: document.getElementById('pass-btn'), correct: document.getElementById('correct-btn'), nextRound: document.getElementById('next-round-btn'), newGame: document.getElementById('new-game-btn'), teamCount: document.querySelectorAll('.team-count-btn'), playAgain: document.getElementById('play-again-btn'), skipCountdown: document.getElementById('skip-countdown-btn'), sound: document.getElementById('sound-btn'), deckOptions: document.querySelectorAll('.deck-option') };
         const displays = { score: document.getElementById('score'), timer: document.getElementById('timer'), targetWord: document.getElementById('target-word'), forbiddenWordsList: document.getElementById('forbidden-words-list'), gameCard: document.getElementById('game-card'), currentTeamIndicator: document.getElementById('current-team-indicator'), scoreboard: document.getElementById('scoreboard'), winnerTeamName: document.getElementById('winner-team-name'), winnerTeamScore: document.getElementById('winner-team-score'), winnerDisplay: document.getElementById('winner-display'), finalWinnerTeamName: document.getElementById('final-winner-team-name'), finalWinnerTeamScore: document.getElementById('final-winner-team-score'), finalScoreboard: document.getElementById('final-scoreboard'), countdownNumber: document.getElementById('countdown-number'), countdownMessage: document.getElementById('countdown-message'), };
 
@@ -942,7 +993,7 @@
         // --- GAME LOGIC ---
         const shuffleArray = (array) => { for (let i = array.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [array[i], array[j]] = [array[j], array[i]]; } return array; };
         
-        const renderScreen = () => { Object.values(screens).forEach(screen => screen.classList.remove('active')); if (gameState === 'WELCOME') screens.welcome.classList.add('active'); if (gameState === 'TEAM_SELECTION') screens.teamSelection.classList.add('active'); if (gameState === 'GET_READY') screens.getReady.classList.add('active'); if (gameState === 'PLAYING') screens.game.classList.add('active'); if (gameState === 'ROUND_OVER') screens.roundOver.classList.add('active'); if (gameState === 'GAME_OVER') screens.gameOver.classList.add('active'); };
+        const renderScreen = () => { Object.values(screens).forEach(screen => screen.classList.remove('active')); if (gameState === 'WELCOME') screens.welcome.classList.add('active'); if (gameState === 'TEAM_SELECTION') screens.teamSelection.classList.add('active'); if (gameState === 'GET_READY') screens.getReady.classList.add('active'); if (gameState === 'PLAYING') screens.game.classList.add('active'); if (gameState === 'REVIEW') screens.review.classList.add('active'); if (gameState === 'ROUND_OVER') screens.roundOver.classList.add('active'); if (gameState === 'GAME_OVER') screens.gameOver.classList.add('active'); };
 
         const updateCard = () => {
           const card = shuffledCards[currentCardIndex];
@@ -955,7 +1006,38 @@
           card.forbiddenWords.forEach(word => { const li = document.createElement('li'); li.className = 'forbidden-word'; li.textContent = word; displays.forbiddenWordsList.appendChild(li); });
           
           Splitting({ target: displays.targetWord, by: 'chars' });
+          Splitting({ target: displays.targetWord, by: 'chars' });
           animateElement(displays.gameCard, 'fadeInUp', 400);
+        };
+        
+        const showReviewScreen = () => {
+             gameState = 'REVIEW';
+             renderScreen();
+             const list = document.getElementById('review-list');
+             list.innerHTML = '';
+             roundCards.forEach((item, index) => {
+                 const li = document.createElement('li');
+                 li.className = 'review-item';
+                 li.innerHTML = `
+                   <span class="review-word">${item.word}</span>
+                   <button class="status-btn ${item.status === 'correct' ? 'correct' : 'pass'}" onclick="toggleCardStatus(${index})">
+                     ${item.status === 'correct' ? 'Correct' : 'Pass'}
+                   </button>
+                 `;
+                 list.appendChild(li);
+             });
+             updateReviewScore();
+        };
+
+        window.toggleCardStatus = (index) => {
+             const item = roundCards[index];
+             item.status = item.status === 'correct' ? 'skipped' : 'correct';
+             showReviewScreen(); // Re-render to update UI
+        };
+
+        const updateReviewScore = () => {
+             roundScore = roundCards.filter(c => c.status === 'correct').length;
+             document.getElementById('review-score').textContent = roundScore;
         };
 
         const nextCard = () => { currentCardIndex++; if (currentCardIndex >= shuffledCards.length) { shuffledCards = shuffleArray([...gameCards]); currentCardIndex = 0; } updateCard(); };
@@ -966,7 +1048,7 @@
           displays.timer.classList.toggle('low-time', timeLeft <= 10); 
           if (timeLeft <= 0) { 
              SoundManager.timeUpBuzz();
-             endRound(); 
+             showReviewScreen(); 
           } else if (timeLeft <= 5) {
              // Optional critical ticking sound for last 5 seconds?
              // SoundManager.countdownBeep(); 
@@ -1023,6 +1105,7 @@
 
         const startRound = () => {
           gameState = 'PLAYING';
+          roundCards = [];
           roundScore = 0;
           timeLeft = ROUND_DURATION;
           displays.score.textContent = roundScore;
@@ -1137,20 +1220,36 @@
             }
         };
 
-        const handleCorrect = () => { roundScore++; displays.score.textContent = roundScore; animateElement(displays.score, 'tada', 800); nextCard(); };
-        const handlePass = () => { nextCard(); };
+        const handleCorrect = () => { 
+            roundCards.push({ word: displays.targetWord.textContent, status: 'correct' });
+            roundScore++; displays.score.textContent = roundScore; animateElement(displays.score, 'tada', 800); nextCard(); 
+        };
+        const handlePass = () => { 
+            roundCards.push({ word: displays.targetWord.textContent, status: 'skipped' });
+            nextCard(); 
+        };
 
         // --- EVENT LISTENERS ---
         const actions = {
           'play-now-btn': showTeamSelection, 'next-round-btn': startCountdown,
           'new-game-btn': resetGame, 'play-again-btn': resetGame,
           'skip-countdown-btn': skipCountdown, 'correct-btn': handleCorrect,
-          'pass-btn': handlePass, 'sound-btn': () => SoundManager.toggle()
+          'pass-btn': handlePass, 'sound-btn': () => SoundManager.toggle(),
+          'confirm-score-btn': endRound
         };
         Object.entries(actions).forEach(([id, fn]) => document.getElementById(id)?.addEventListener('click', fn));
 
         buttons.teamCount.forEach(b => b.addEventListener('click', (e) => setupAndStartGame(parseInt(e.target.dataset.teams))));
         buttons.deckOptions.forEach(o => o.addEventListener('click', (e) => toggleDeck(e.currentTarget)));
+        
+        // Timer Selection Logic
+        document.querySelectorAll('.timer-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                document.querySelectorAll('.timer-btn').forEach(b => b.classList.remove('selected'));
+                e.target.classList.add('selected');
+                ROUND_DURATION = parseInt(e.target.dataset.time);
+            });
+        });
         
         // --- INITIAL RENDER ---
         renderScreen();
