@@ -599,7 +599,7 @@ const _routes = [
   {
     name: "games-imposter",
     path: "/games/imposter",
-    component: () => import('./imposter-CbsrHxow.mjs')
+    component: () => import('./imposter-CH-RgvAQ.mjs')
   },
   {
     name: "index",
