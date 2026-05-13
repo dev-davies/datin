@@ -1,0 +1,6 @@
+{
+  "name": "Imposter Game",
+  "description": "A pass-and-play party game where players try to find the hidden imposter among the crewmates.",
+  "requestFramePermissions": [],
+  "majorCapabilities": []
+}
