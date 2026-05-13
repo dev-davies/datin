@@ -1,0 +1,11 @@
+{
+  "name": "dattin-ariya-root",
+  "private": true,
+  "scripts": {
+    "dev": "npm --prefix ariya run dev",
+    "build": "npm --prefix ariya run build",
+    "generate": "npm --prefix ariya run generate",
+    "preview": "npm --prefix ariya run preview",
+    "postinstall": "npm --prefix ariya install"
+  }
+}

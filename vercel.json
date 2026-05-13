@@ -1,0 +1,5 @@
+{
+  "installCommand": "npm --prefix ariya install",
+  "buildCommand": "npm --prefix ariya run build",
+  "outputDirectory": "ariya/.output/public"
+}
