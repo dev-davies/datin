@@ -60,6 +60,7 @@ const emit = defineEmits<{
 
 const playButtonClass = computed(() => {
   if (props.variant === 'imposter') return 'neo-btn success full'
+  if (props.variant === 'gidigidi') return 'btn gidigidi-primary game-welcome-play'
   return 'btn dat-primary game-welcome-play'
 })
 </script>

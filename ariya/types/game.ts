@@ -12,7 +12,7 @@ export interface LobbyGame {
   status: string
 }
 
-export type GameTheme = 'dat-tin' | 'imposter'
+export type GameTheme = 'dat-tin' | 'imposter' | 'gidigidi'
 
 export interface ScoreboardEntry {
   key: string

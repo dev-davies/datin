@@ -2,11 +2,11 @@ import { ref, computed, onUnmounted } from 'vue'
 import { gidigidiWords } from '~/constants/gidigidi-words'
 import { shuffle } from '~/utils/shuffle'
 
-export type GidigidiGameState = 'setup' | 'playing' | 'finished'
+export type GidigidiGameState = 'welcome' | 'setup' | 'playing' | 'finished'
 export type FlashState = 'none' | 'correct' | 'pass'
 
 export function useGidigidiGame() {
-  const gameState = ref<GidigidiGameState>('setup')
+  const gameState = ref<GidigidiGameState>('welcome')
   const words = ref<string[]>([...gidigidiWords])
   const currentIndex = ref(0)
   const score = ref(0)
@@ -17,6 +17,10 @@ export function useGidigidiGame() {
   let timerInterval: ReturnType<typeof setInterval> | null = null
 
   const currentWord = computed(() => words.value[currentIndex.value] || '')
+
+  function goToSetup() {
+    gameState.value = 'setup'
+  }
 
   function startGame() {
     // Use the robust Fisher-Yates shuffle utility
@@ -141,6 +145,7 @@ export function useGidigidiGame() {
     timeLeft,
     tiltCooldown,
     flashState,
+    goToSetup,
     requestMotionPermission,
     startGame,
     endGame,

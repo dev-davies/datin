@@ -1,7 +1,20 @@
 <template>
   <div :class="['gidigidi-container', `flash-${flashState}`]">
+    <!-- Welcome State -->
+    <div v-if="gameState === 'welcome'" class="welcome-wrapper">
+      <GameLobbyLink theme="gidigidi" />
+      <GameWelcome
+        variant="gidigidi"
+        title="Gidigidi"
+        description="A hilarious Nigerian charades game. Place the phone on your forehead and guess the words!"
+        :rules="gidigidiRules"
+        play-label="Next"
+        @start="goToSetup"
+      />
+    </div>
+
     <!-- Setup State -->
-    <div v-if="gameState === 'setup'" class="setup-state">
+    <div v-else-if="gameState === 'setup'" class="setup-state">
       <div class="icon-instruction">
         <span class="icon">📱➡️🤕</span>
         <p>Hold phone to your forehead in landscape mode</p>
@@ -34,6 +47,7 @@
 
 <script setup lang="ts">
 import { useGidigidiGame } from '~/composables/useGidigidiGame'
+import { gidigidiRules } from '~/constants/games'
 
 const {
   gameState,
@@ -41,6 +55,7 @@ const {
   score,
   timeLeft,
   flashState,
+  goToSetup,
   requestMotionPermission,
   resetGame
 } = useGidigidiGame()
@@ -70,6 +85,14 @@ const {
 }
 
 /* Setup State */
+.welcome-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
 .setup-state {
   display: flex;
   flex-direction: column;

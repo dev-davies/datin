@@ -65,3 +65,22 @@ export const imposterRules: GameRule[] = [
     text: 'Vote secretly to eliminate who you think is the imposter. Crewmates win if they catch them; the imposter wins if they survive.'
   }
 ]
+
+export const gidigidiRules: GameRule[] = [
+  {
+    icon: '📱',
+    text: 'Hold your phone up to your forehead in landscape mode facing your friends.'
+  },
+  {
+    icon: '🎭',
+    text: 'Your friends will act out, describe, or shout clues for the word on the screen without saying it.'
+  },
+  {
+    icon: '✅',
+    text: 'Tilt the phone FORWARD (face down) if you guess the word correctly.'
+  },
+  {
+    icon: '❌',
+    text: 'Tilt the phone BACKWARD (face up) to pass if you do not know the word.'
+  }
+]
