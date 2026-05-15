@@ -34,6 +34,7 @@ export { defineLazyHydrationComponent } from '#app/composables/lazy-hydration';
 export { datTinTimerOptions, useDatTinGame, DatTinPhase, DeckKey, DatTinCard, DatTinCardData, DatTinTeam, DatTinRoundCard } from '../composables/useDatTinGame';
 export { useDatTinSound } from '../composables/useDatTinSound';
 export { useGameSound } from '../composables/useGameSound';
+export { useGidigidiGame, GidigidiGameState, FlashState } from '../composables/useGidigidiGame';
 export { imposterWordCategories, useImposterGame, ImposterPhase } from '../composables/useImposterGame';
 export { shuffle } from '../utils/shuffle';
 export { usePWA, useTransparentPwaIcon, useMaskablePwaIcon, useFaviconPwaIcon, useApplePwaIcon, useAppleSplashScreenPwaIcon } from '../node_modules/@vite-pwa/nuxt/dist/runtime/composables/index';

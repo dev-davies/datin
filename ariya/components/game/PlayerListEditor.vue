@@ -19,13 +19,23 @@
       </li>
     </ul>
 
-    <p v-if="players.length < minPlayers" class="need-players">
+    <p v-if="players.length > 0 && players.length < minPlayers" class="need-players">
       {{ needMoreMessage ?? `Need at least ${minPlayers} players (${players.length}/${minPlayers})` }}
     </p>
+    <button
+      v-else-if="players.length === 0"
+      class="neo-btn secondary full"
+      type="button"
+      style="margin-top: 1rem;"
+      @click="emit('confirm')"
+    >
+      Quick Start (Default Players)
+    </button>
     <button
       v-else
       class="neo-btn success full"
       type="button"
+      style="margin-top: 1rem;"
       @click="emit('confirm')"
     >
       {{ confirmLabel }}

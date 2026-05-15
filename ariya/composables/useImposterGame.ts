@@ -42,7 +42,12 @@ export function useImposterGame() {
   }
 
   function startGame() {
-    if (players.value.length < 3) return
+    if (players.value.length === 0) {
+      players.value = ['Player 1', 'Player 2', 'Player 3', 'Player 4']
+    } else if (players.value.length < 3) {
+      return
+    }
+
     imposterIndex.value = Math.floor(Math.random() * players.value.length)
     const words = imposterWordCategories[selectedCategory.value]
     currentWord.value = words[Math.floor(Math.random() * words.length)]

@@ -70,7 +70,7 @@ import { lobbyGames } from '~/constants/games'
   scroll-snap-type: x mandatory;
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
-  padding: 0 7.5%;
+  padding: 2rem 7.5%;
   gap: 1.5rem;
 }
 
@@ -91,11 +91,15 @@ import { lobbyGames } from '~/constants/games'
   justify-content: space-between;
   min-height: 400px;
   border: 2px solid transparent;
-  transition: transform 0.3s ease;
+  transition: all 0.3s ease;
+}
+
+.game-card:hover {
+  transform: translateY(-8px);
 }
 
 .game-card:active {
-  transform: scale(0.96);
+  transform: translateY(-4px) scale(0.98);
 }
 
 .theme-dat-tin { 
@@ -164,7 +168,7 @@ import { lobbyGames } from '~/constants/games'
 /* Desktop Responsiveness */
 @media (min-width: 768px) {
   .carousel {
-    padding: 0 calc(50% - 200px); /* Center a 400px card */
+    padding: 2rem calc(50% - 200px); /* Center a 400px card */
     gap: 2rem;
   }
   .game-card {

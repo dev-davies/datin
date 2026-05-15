@@ -114,6 +114,7 @@ declare global {
   const useFaviconPwaIcon: typeof import('../../node_modules/@vite-pwa/nuxt/dist/runtime/composables/index').useFaviconPwaIcon
   const useFetch: typeof import('../../node_modules/nuxt/dist/app/composables/fetch').useFetch
   const useGameSound: typeof import('../../composables/useGameSound').useGameSound
+  const useGidigidiGame: typeof import('../../composables/useGidigidiGame').useGidigidiGame
   const useHead: typeof import('../../node_modules/nuxt/dist/app/composables/head').useHead
   const useHeadSafe: typeof import('../../node_modules/nuxt/dist/app/composables/head').useHeadSafe
   const useHydration: typeof import('../../node_modules/nuxt/dist/app/composables/hydrate').useHydration
@@ -211,6 +212,9 @@ declare global {
   // @ts-ignore
   export type { DatTinPhase, DeckKey, DatTinCard, DatTinCardData, DatTinTeam, DatTinRoundCard } from '../../composables/useDatTinGame'
   import('../../composables/useDatTinGame')
+  // @ts-ignore
+  export type { GidigidiGameState, FlashState } from '../../composables/useGidigidiGame'
+  import('../../composables/useGidigidiGame')
   // @ts-ignore
   export type { ImposterPhase } from '../../composables/useImposterGame'
   import('../../composables/useImposterGame')
@@ -332,6 +336,7 @@ declare module 'vue' {
     readonly useFaviconPwaIcon: UnwrapRef<typeof import('../../node_modules/@vite-pwa/nuxt/dist/runtime/composables/index')['useFaviconPwaIcon']>
     readonly useFetch: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app/composables/fetch')['useFetch']>
     readonly useGameSound: UnwrapRef<typeof import('../../composables/useGameSound')['useGameSound']>
+    readonly useGidigidiGame: UnwrapRef<typeof import('../../composables/useGidigidiGame')['useGidigidiGame']>
     readonly useHead: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app/composables/head')['useHead']>
     readonly useHeadSafe: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app/composables/head')['useHeadSafe']>
     readonly useHydration: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app/composables/hydrate')['useHydration']>
