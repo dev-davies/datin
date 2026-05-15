@@ -1,22 +1,12 @@
 import { ref, computed, onUnmounted } from 'vue'
+import { gidigidiWords } from '~/constants/gidigidi-words'
 
 export type GidigidiGameState = 'setup' | 'playing' | 'finished'
 export type FlashState = 'none' | 'correct' | 'pass'
 
 export function useGidigidiGame() {
   const gameState = ref<GidigidiGameState>('setup')
-  const words = ref<string[]>([
-    'Danfo Conductor',
-    'Wizkid',
-    'Eating Suya',
-    'Generator Noise',
-    'Jollof Rice',
-    'Lagos Traffic',
-    'Naija Wedding',
-    'Okada Rider',
-    'Burna Boy',
-    'Owa o! (Next bus stop)'
-  ])
+  const words = ref<string[]>([...gidigidiWords])
   const currentIndex = ref(0)
   const score = ref(0)
   const timeLeft = ref(60)
