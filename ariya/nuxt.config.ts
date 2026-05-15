@@ -1,8 +1,14 @@
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
+  components: [
+    {
+      path: '~/components',
+      pathPrefix: false
+    }
+  ],
   modules: ['@vite-pwa/nuxt'],
-  css: ['~/assets/css/main.css'],
+  css: ['~/assets/css/main.css', '~/assets/css/dat-tin.css'],
   app: {
     head: {
       title: 'Ariya',

@@ -31,5 +31,10 @@ export { requestIdleCallback, cancelIdleCallback } from '#app/compat/idle-callba
 export { setInterval } from '#app/compat/interval';
 export { definePageMeta, PageMeta } from '#app/composables/pages';
 export { defineLazyHydrationComponent } from '#app/composables/lazy-hydration';
+export { datTinTimerOptions, useDatTinGame, DatTinPhase, DeckKey, DatTinCard, DatTinCardData, DatTinTeam, DatTinRoundCard } from '../composables/useDatTinGame';
+export { useDatTinSound } from '../composables/useDatTinSound';
+export { useGameSound } from '../composables/useGameSound';
+export { imposterWordCategories, useImposterGame, ImposterPhase } from '../composables/useImposterGame';
+export { shuffle } from '../utils/shuffle';
 export { usePWA, useTransparentPwaIcon, useMaskablePwaIcon, useFaviconPwaIcon, useApplePwaIcon, useAppleSplashScreenPwaIcon } from '../node_modules/@vite-pwa/nuxt/dist/runtime/composables/index';
 export { useNuxtDevTools } from '../node_modules/@nuxt/devtools/dist/runtime/use-nuxt-devtools';

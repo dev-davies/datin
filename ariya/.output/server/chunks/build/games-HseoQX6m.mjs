@@ -1,0 +1,59 @@
+const lobbyGames = [
+  {
+    name: "Dat Tin",
+    slug: "dat-tin",
+    href: "/games/dat-tin",
+    description: "A Naija-flavoured word guessing game with forbidden words, teams, timers, and plenty tension.",
+    status: "Word party game"
+  },
+  {
+    name: "Imposter",
+    slug: "imposter",
+    href: "/games/imposter",
+    description: "Pass-and-play hidden role game where everyone knows the word except one sharp imposter.",
+    status: "Hidden role game"
+  }
+];
+const datTinRules = [
+  {
+    icon: "🗣️",
+    text: "Describe the green word (Dat Tin) to your teammates without saying it.",
+    html: "Describe the green word (<strong>Dat Tin</strong>) to your teammates without saying it."
+  },
+  {
+    icon: "🚫",
+    text: "Avoid using any of the red forbidden words (No Talk Am!) listed below.",
+    html: "Avoid using any of the red forbidden words (<strong>No Talk Am!</strong>) listed below."
+  },
+  {
+    icon: "⏳",
+    text: "You have 60 seconds per round. Score as many points as possible!",
+    html: "You have 60 seconds per round. Score as many points as possible!"
+  },
+  {
+    icon: "🏆",
+    text: "The team with the most points after 3 rounds is the Champion!",
+    html: "The team with the most points after 3 rounds is the <strong>Champion!</strong>"
+  }
+];
+const imposterRules = [
+  {
+    icon: "📱",
+    text: "Pass the phone so each player can see their role privately. Do not peek at anyone else's screen."
+  },
+  {
+    icon: "🤫",
+    text: "Everyone except one imposter sees the same secret word. The imposter must blend in without knowing it."
+  },
+  {
+    icon: "💬",
+    text: "Discuss and ask questions to spot who seems unsure or vague about the word."
+  },
+  {
+    icon: "🗳️",
+    text: "Vote secretly to eliminate who you think is the imposter. Crewmates win if they catch them; the imposter wins if they survive."
+  }
+];
+
+export { datTinRules as d, imposterRules as i, lobbyGames as l };
+//# sourceMappingURL=games-HseoQX6m.mjs.map

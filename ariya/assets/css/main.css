@@ -282,6 +282,21 @@ input {
   color: #000;
 }
 
+.game-lobby-link {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  z-index: 1000;
+  color: #000;
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.game-lobby-link:hover {
+  opacity: 0.8;
+}
+
 .imposter-header {
   display: flex;
   flex-direction: column;
@@ -1154,4 +1169,114 @@ input {
     border-radius: 0;
     font-size: 2.25rem;
   }
+}
+
+/* Shared welcome + rules */
+.game-welcome {
+  display: grid;
+  gap: 1.5rem;
+  width: min(28rem, 100%);
+  margin: 0 auto;
+}
+
+.game-welcome.dat-tin .game-welcome-header,
+.game-welcome.dat-tin .game-welcome-rules {
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  background: var(--green-800);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  text-align: center;
+}
+
+.game-welcome.dat-tin .game-welcome-title {
+  margin: 0;
+  color: var(--yellow-400);
+  font-size: clamp(2.5rem, 10vw, 3.75rem);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+}
+
+.game-welcome-accent {
+  font-size: 75%;
+}
+
+.game-welcome-rules-heading {
+  margin: 0 0 1rem;
+  color: var(--yellow-300);
+  font-size: 1.25rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+.game-rules {
+  display: grid;
+  gap: 0.75rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.game-rule {
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+  border-radius: 0.5rem;
+  padding: 0.75rem;
+  background: var(--green-900);
+  text-align: left;
+}
+
+.game-rule-icon {
+  flex-shrink: 0;
+  font-size: 1.25rem;
+}
+
+.game-rule-text {
+  color: var(--gray-200);
+  line-height: 1.5;
+}
+
+.game-welcome-play {
+  margin-top: 0;
+}
+
+.imposter-welcome {
+  display: grid;
+  gap: 1rem;
+}
+
+.imposter-welcome .game-welcome {
+  width: 100%;
+  margin: 0;
+}
+
+.imposter-welcome .game-welcome-rules {
+  border: 4px solid #000;
+  border-radius: 40px;
+  padding: 1.5rem;
+  background: #fff;
+  box-shadow: 12px 12px 0 #000;
+}
+
+.imposter-welcome .game-welcome-rules-heading {
+  color: #000;
+  text-transform: uppercase;
+}
+
+.imposter-welcome .game-rules.imposter .game-rule {
+  background: #fef9c3;
+  color: #000;
+}
+
+.imposter-welcome .game-rule-text {
+  color: #000;
+}
+
+.word-card .forbidden-label {
+  margin: 0 0 0.5rem;
+  color: #991b1b;
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }

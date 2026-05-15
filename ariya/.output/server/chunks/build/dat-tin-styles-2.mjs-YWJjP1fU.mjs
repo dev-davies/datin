@@ -1,0 +1,4 @@
+const GamePauseOverlay_vue_vue_type_style_index_0_scoped_f9674dce_lang = ".pause-overlay[data-v-f9674dce]{align-items:center;background:#000000e6;display:flex;flex-direction:column;inset:0;justify-content:center;position:fixed;text-align:center;z-index:3000}.pause-overlay h1[data-v-f9674dce]{color:var(--yellow-400);font-size:3rem;margin-bottom:2rem}.pause-overlay p[data-v-f9674dce]{color:var(--white);font-size:1.5rem;margin-bottom:2rem}.pause-actions[data-v-f9674dce]{align-items:center;display:flex;flex-direction:column;gap:1rem}.pause-continue[data-v-f9674dce]{font-size:1.5rem;max-width:20rem;padding:1rem 3rem}.pause-quit[data-v-f9674dce]{font-size:1.25rem;max-width:20rem;padding:.75rem 2rem}";
+
+export { GamePauseOverlay_vue_vue_type_style_index_0_scoped_f9674dce_lang as G };
+//# sourceMappingURL=dat-tin-styles-2.mjs-YWJjP1fU.mjs.map

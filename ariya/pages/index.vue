@@ -23,35 +23,8 @@
           </div>
         </div>
 
-        <div class="game-list" aria-label="Available games">
-          <NuxtLink v-for="game in games" :key="game.slug" :to="game.href" :class="['game-card', game.slug]">
-            <article>
-              <h2>{{ game.name }}</h2>
-              <p>{{ game.description }}</p>
-              <span>{{ game.status }}</span>
-            </article>
-          </NuxtLink>
-        </div>
+        <LobbyGameList />
       </section>
     </div>
   </main>
 </template>
-
-<script setup lang="ts">
-const games = [
-  {
-    name: 'Dat Tin',
-    slug: 'dat-tin',
-    href: '/games/dat-tin',
-    description: 'A Naija-flavoured word guessing game with forbidden words, teams, timers, and plenty tension.',
-    status: 'Word party game'
-  },
-  {
-    name: 'Imposter',
-    slug: 'imposter',
-    href: '/games/imposter',
-    description: 'Pass-and-play hidden role game where everyone knows the word except one sharp imposter.',
-    status: 'Hidden role game'
-  }
-]
-</script>
