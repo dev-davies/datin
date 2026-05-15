@@ -14,6 +14,13 @@ export const lobbyGames: LobbyGame[] = [
     href: '/games/imposter',
     description: 'Pass-and-play hidden role game where everyone knows the word except one sharp imposter.',
     status: 'Hidden role game'
+  },
+  {
+    name: 'Gidigidi',
+    slug: 'gidigidi',
+    href: '/games/gidigidi',
+    description: 'A hilarious Nigerian charades game. Place the phone on your forehead and guess the words!',
+    status: 'Charades party game'
   }
 ]
 
