@@ -1,5 +1,6 @@
 import { ref, computed, onUnmounted } from 'vue'
 import { gidigidiWords } from '~/constants/gidigidi-words'
+import { shuffle } from '~/utils/shuffle'
 
 export type GidigidiGameState = 'setup' | 'playing' | 'finished'
 export type FlashState = 'none' | 'correct' | 'pass'
@@ -18,8 +19,8 @@ export function useGidigidiGame() {
   const currentWord = computed(() => words.value[currentIndex.value] || '')
 
   function startGame() {
-    // Shuffle words for randomness
-    words.value = [...words.value].sort(() => Math.random() - 0.5)
+    // Use the robust Fisher-Yates shuffle utility
+    words.value = shuffle(gidigidiWords)
     currentIndex.value = 0
     score.value = 0
     timeLeft.value = 60
