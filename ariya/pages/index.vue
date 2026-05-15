@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { lobbyGames } from '~/constants/games'
+import { lobbyGames } from '~/constants/games.ts'
 </script>
 
 <template>
@@ -61,6 +61,8 @@ import { lobbyGames } from '~/constants/games'
 
 .carousel-container {
   width: 100%;
+  max-width: 100vw;
+  overflow: hidden;
   padding-bottom: 2rem;
 }
 
@@ -70,8 +72,8 @@ import { lobbyGames } from '~/constants/games'
   scroll-snap-type: x mandatory;
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
-  padding: 2rem 7.5%;
-  gap: 1.5rem;
+  padding: 2rem 7.5vw;
+  gap: 1rem;
 }
 
 .carousel::-webkit-scrollbar {
@@ -80,7 +82,8 @@ import { lobbyGames } from '~/constants/games'
 
 .game-card {
   scroll-snap-align: center;
-  flex: 0 0 85%;
+  flex: 0 0 85vw;
+  width: 85vw;
   max-width: 450px;
   background-color: #1E1E1E;
   border-radius: 24px;
