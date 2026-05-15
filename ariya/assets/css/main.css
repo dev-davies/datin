@@ -1272,6 +1272,11 @@ input {
   color: #000;
 }
 
+.imposter-welcome .game-description {
+  color: #121212;
+  font-weight: 600;
+}
+
 .word-card .forbidden-label {
   margin: 0 0 0.5rem;
   color: #991b1b;

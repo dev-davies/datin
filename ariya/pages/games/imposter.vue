@@ -1,6 +1,5 @@
 <template>
   <GameShell theme="imposter" narrow>
-    <GameLobbyLink theme="imposter" />
     <GameNav theme="imposter" />
 
     <ImposterWelcome v-if="phase === 'welcome'" @start="goToSetup" />
