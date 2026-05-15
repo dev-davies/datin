@@ -1,0 +1,22 @@
+export const gidigidiWords: string[] = [
+  'Danfo Conductor shouting Oshodi',
+  'Mum searching her handbag',
+  'Wizkid performing',
+  'Eating hot Suya',
+  'Generator making noise',
+  'Traffic Warden at Ojuelegba',
+  'Begging for transfer',
+  'Fighting over party rice',
+  'Burna Boy stepping on stage',
+  'Haggling price at Yaba market',
+  'Pretending to fast',
+  'Taking selfies at a wedding',
+  'Nepa taking the light',
+  'Slapping mosquito',
+  'Pastor collecting offering',
+  'Dodging landlord',
+  'Blowing hot amala',
+  'Riding okada in the rain',
+  'Spraying money at Owambe',
+  'Waiting for ATM to dispense'
+]
