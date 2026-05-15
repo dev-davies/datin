@@ -84,7 +84,7 @@ import { lobbyGames } from '~/constants/games.ts'
   scroll-snap-align: center;
   flex: 0 0 85vw;
   width: 85vw;
-  max-width: 450px;
+  max-width: 350px;
   background-color: #1E1E1E;
   border-radius: 24px;
   padding: 2.5rem 2rem;
@@ -171,11 +171,17 @@ import { lobbyGames } from '~/constants/games.ts'
 /* Desktop Responsiveness */
 @media (min-width: 768px) {
   .carousel {
-    padding: 2rem calc(50% - 200px); /* Center a 400px card */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    overflow-x: visible;
+    padding: 2rem 0;
     gap: 2rem;
   }
   .game-card {
-    flex: 0 0 400px;
+    scroll-snap-align: none;
+    flex: 0 0 350px;
+    width: 350px;
     min-height: 450px;
   }
 }
