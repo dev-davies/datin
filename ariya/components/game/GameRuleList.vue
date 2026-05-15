@@ -1,7 +1,8 @@
 <template>
   <ul :class="listClass">
     <li v-for="(rule, index) in rules" :key="index" :class="itemClass">
-      <span :class="iconClass" aria-hidden="true">{{ rule.icon }}</span>
+      <span v-if="rule.icon.includes('<svg')" :class="iconClass" aria-hidden="true" v-html="rule.icon" />
+      <span v-else :class="iconClass" aria-hidden="true">{{ rule.icon }}</span>
       <span v-if="rule.html && useHtml" :class="textClass" v-html="rule.html" />
       <span v-else :class="textClass">{{ rule.text }}</span>
     </li>
