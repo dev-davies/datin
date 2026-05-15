@@ -113,6 +113,10 @@ import { lobbyGames } from '~/constants/games.ts'
   border-color: #9D50BB; 
   box-shadow: 0 15px 35px rgba(157, 80, 187, 0.15); 
 }
+.theme-gidigidi { 
+  border-color: #39FF14; 
+  box-shadow: 0 15px 35px rgba(57, 255, 20, 0.15); 
+}
 
 .card-content {
   display: flex;
@@ -128,6 +132,7 @@ import { lobbyGames } from '~/constants/games.ts'
 
 .theme-dat-tin .game-title { color: #FFD700; }
 .theme-imposter .game-title { color: #9D50BB; }
+.theme-gidigidi .game-title { color: #39FF14; }
 
 .game-desc {
   color: #D3D3D3;
@@ -166,6 +171,12 @@ import { lobbyGames } from '~/constants/games.ts'
   background: linear-gradient(135deg, rgba(157, 80, 187, 0.2) 0%, rgba(157, 80, 187, 0.05) 100%);
   color: #9D50BB;
   border-color: rgba(157, 80, 187, 0.2);
+}
+
+.theme-gidigidi .play-btn { 
+  background: linear-gradient(135deg, rgba(57, 255, 20, 0.2) 0%, rgba(57, 255, 20, 0.05) 100%);
+  color: #39FF14;
+  border-color: rgba(57, 255, 20, 0.2);
 }
 
 /* Desktop Responsiveness */
